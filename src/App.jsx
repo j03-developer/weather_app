@@ -1,35 +1,55 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import realtime from '../public/realtime'
+import { WiHumidity, WiCloudy, WiCloudyGusts, WiWindy } from "react-icons/wi";
 
-function App() {
-  const [count, setCount] = useState(0)
+function WeatherContainer() {
+  const weatherRealtime = realtime.current;
+  const weatherLocation = realtime.location;
+  console.error(weatherRealtime)
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div className="p-2">
+      <header className="bg-[#33619D] max-w-md mx-auto p-2 rounded-lg">
+        <div className="title flex flex-col">
+          <span>{weatherLocation.country} ({weatherLocation.region} / {weatherLocation.name})</span>
+          <span>time</span>
+        </div>
+        <div className="main flex justify-center">
+          <img src={weatherRealtime.condition.icon} alt="" />
+          <div className="temperature">
+            <div className="degree">
+              <span className="text">{weatherRealtime.temp_c}</span>
+              <span>&deg; C</span>
+            </div>
+            <span>{weatherRealtime.condition.text}</span>
+          </div>
+        </div>
+        <div className="listInfo flex justify-around text-center">
+          <div>
+            <WiHumidity className="w-[31px] h-[31px]" />
+            <span>{weatherRealtime.humidity}</span>
+          </div>
+          <div>
+            <WiCloudy className="w-[31px] h-[31px]" />
+            <span>{weatherRealtime.cloud}</span>
+          </div>
+          <div>
+            <WiCloudyGusts className="w-[31px] h-[31px]" />
+            <span>{weatherRealtime.gust_kph}</span>
+          </div>
+          <div>
+            <WiWindy className="w-[31px] h-[31px]" />
+            <span>{weatherRealtime.wind_kph}</span>
+          </div>
+        </div>
+      </header>
+    </div>
   )
 }
 
-export default App
+export default function App() {
+  return (
+    <div className="bg-[#285A99] text-[#F5F9FB] h-screen w-full">
+      <WeatherContainer />
+    </div>
+  )
+}
