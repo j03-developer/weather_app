@@ -1,6 +1,14 @@
 import realtime from '../public/realtime'
 import { WiHumidity, WiCloudy, WiCloudyGusts, WiWindy } from "react-icons/wi";
 
+function formatDate() {
+  const today = new Date();
+  return new Intl.DateTimeFormat(
+    'en-US',
+    { weekday: 'long' }
+  ).format(today);
+}
+
 function WeatherContainer() {
   const weatherRealtime = realtime.current;
   const weatherLocation = realtime.location;
@@ -11,7 +19,7 @@ function WeatherContainer() {
       <header className="bg-[#33619D] max-w-md mx-auto p-2 rounded-lg">
         <div className="title flex flex-col">
           <span>{weatherLocation.country} ({weatherLocation.region} / {weatherLocation.name})</span>
-          <span>time</span>
+          <span>{formatDate()}</span>
         </div>
         <div className="main flex justify-center">
           <img src={weatherRealtime.condition.icon} alt="" />
